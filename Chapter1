@@ -1,0 +1,38 @@
+Act as an expert community college professor, instructional designer, and curriculum architect. I need you to draft a comprehensive, publication-grade lesson guide and coursework plan for my college-level Principles of Management course. 
+
+### LESSON DEMOGRAPHICS:
+- **Title of Lesson:** Introduction to Management & Theoretical P-O-L-C Frameworks
+- **Audience:** Community College students, often balancing work/life commitments, career-focused or preparing for transfer.
+- **Course Format:** Online 16-week course (regular paced, highly structured, deep reflections).
+
+### KEY CURRICULUM ELEMENTS:
+- **Core Learning Objectives (Mapped to Bloom's Taxonomy):**
+  - Recall and define the four key functions of management (Planning, Organizing, Leading, Controlling).
+  - Differentiate between the technical, interpersonal, and conceptual skills required at varying levels of an organization.
+  - Analyze historical management frameworks (e.g., Taylorism vs. Mayo's Human Relations) to explain modern organizational cultures.
+
+- **Syllabus Topics Covered:**
+  - Definition of management and organizational goals
+  - The 4 core functions of management (Planning, Organizing, Leading, Controlling)
+  - Mintzberg's managerial roles and conceptual skills needed at differing hierarchical levels
+  - Evolution of classical vs. modern behavioral management theories
+
+- **Key Terms & Frameworks to Contextualize:** Planning, Organizing, Leading, Controlling Framework, Managerial Roles, Technical vs. Conceptual Skills, Scientific Management, Hawthorne Studies
+
+### PEDAGOGICAL DESIGN REQUISITES:
+1. **Target Activity Styles:** You must generate active components for: Interactive classroom activities, Community-centered case studies, Practical management labs / simulations, Applied assignments directly linked back to local regional businesses.
+2. **Community & Business Connection:** Incorporate a specialized task focusing on: Conducting a fast-paced audit or observation of a small local storefront or regional chamber business..
+3. **AI Use & Cheating Mitigation:** Build the assessments utilizing this defensive design strategy: Include hyper-local context restrictions, highly personalized reflection connections to their own current workplace/life experiences, and multi-stage scaffolded outlines that LLMs cannot cleanly construct in one go. Require unique non-generic local examples.. This ensures the student cannot successfully run the assignment in standard models without authentic local context or deep individual reflection.
+4. **ADA Compliance & UDL Design:** Incorporate these accessible components into the instructions: Ensure all tasks are highly structured with clear visual headers. Provide alternative prompt guidelines for non-visual learners, fully descriptive alt-text recommendations for diagrams/matrices, and multiple avenues to demonstrate competence (written, slides, or audio recording transcripts).. Ensure any visual tools (like matrix layouts, diagrams) are backed up by clear structural text guidelines.
+5. **Real-world Analogies:** Introduce concepts using these analogies: Generate practical analogies using everyday concepts such as planning family events, coordinating local sports leagues, managing personal budgets, or steering a visual roadmap..
+
+---
+
+### REQUIRED GENERATED OUTPUT STRUCTURE:
+Please generate a comprehensive, highly formatted lesson design featuring:
+1. **An Instructor's Mini-Lecture Overview:** A brief (3-4 paragraph) primer written in an engaging, relatable tone suited to community college students, explaining why these frameworks matter in practical business careers.
+2. **Interactive Class Activities:** Explicitly mapped to the course schedule type. Provide a dynamic activity instructions checklist.
+3. **A Community-Tied Application Case Study or Lab:** A structured assignment directing students to look at their local region, including questions, precise milestones, and grading directions.
+4. **AI-Resistant Formative Assessment:** A localized discussion prompt or reflection paper format designed to bypass easy AI copy-pasting. Include specific prompts that force personal perspective.
+5. **ADA/UDL Checklist for Instructors:** A checklist outlining how to present this lesson accessibly (transcripts, alt-text descriptions, multi-format options).
+6. **Key Takeaway Cheat-Sheet:** A succinct summary table of key terms and concepts.
