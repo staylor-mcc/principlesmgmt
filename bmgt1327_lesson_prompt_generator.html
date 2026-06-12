@@ -1,0 +1,407 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .pg-wrap { padding: 1.5rem 0; max-width: 680px; }
+  .pg-header { background: linear-gradient(135deg, #534AB7 0%, #185FA5 50%, #0F6E56 100%); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; color: white; }
+  .pg-header h1 { font-size: 20px; font-weight: 500; color: white; margin-bottom: 4px; }
+  .pg-header p { font-size: 13px; opacity: 0.85; }
+  .pg-badge { display: inline-block; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 3px 12px; font-size: 12px; margin-top: 8px; }
+  .section { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+  .section-title i { font-size: 16px; }
+  label { font-size: 14px; color: var(--color-text-primary); display: block; margin-bottom: 4px; margin-top: 10px; }
+  label:first-of-type { margin-top: 0; }
+  input[type=text], textarea, select { width: 100%; font-size: 14px; border-radius: var(--border-radius-md); }
+  textarea { min-height: 70px; resize: vertical; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bloom-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-top: 8px; }
+  .bloom-btn { border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 8px 4px; text-align: center; cursor: pointer; transition: all 0.15s; font-size: 11px; color: var(--color-text-secondary); background: var(--color-background-secondary); user-select: none; }
+  .bloom-btn:hover { border-color: var(--color-border-primary); }
+  .bloom-btn.active { color: white; border-color: transparent; }
+  .bloom-btn .bloom-icon { font-size: 18px; display: block; margin-bottom: 3px; }
+  .bloom-btn .bloom-num { font-size: 10px; opacity: 0.8; }
+  .bloom-1.active { background: #0F6E56; }
+  .bloom-2.active { background: #185FA5; }
+  .bloom-3.active { background: #534AB7; }
+  .bloom-4.active { background: #BA7517; }
+  .bloom-5.active { background: #993C1D; }
+  .bloom-6.active { background: #993556; }
+  .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 6px; }
+  .check-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--color-text-primary); cursor: pointer; padding: 6px 8px; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); }
+  .check-item:hover { background: var(--color-background-secondary); }
+  .check-item input[type=checkbox] { width: 14px; height: 14px; flex-shrink: 0; }
+  .tag-input-wrap { display: flex; gap: 8px; align-items: flex-start; margin-top: 6px; }
+  .tag-input-wrap input { flex: 1; }
+  .tag-add-btn { white-space: nowrap; font-size: 13px; padding: 0 12px; height: 36px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; min-height: 10px; }
+  .tag { background: var(--color-background-info); color: var(--color-text-info); border-radius: 20px; padding: 3px 10px; font-size: 12px; display: flex; align-items: center; gap: 5px; }
+  .tag button { background: none; border: none; cursor: pointer; color: var(--color-text-info); font-size: 14px; padding: 0; line-height: 1; }
+  .output-box { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 1rem; font-size: 13px; line-height: 1.7; color: var(--color-text-primary); white-space: pre-wrap; font-family: var(--font-mono); max-height: 400px; overflow-y: auto; }
+  .gen-btn { width: 100%; padding: 12px; font-size: 15px; font-weight: 500; border-radius: var(--border-radius-md); background: linear-gradient(135deg, #534AB7, #185FA5); color: white; border: none; cursor: pointer; margin: 1rem 0 0.5rem; transition: opacity 0.15s; }
+  .gen-btn:hover { opacity: 0.9; }
+  .copy-btn { width: 100%; padding: 10px; font-size: 14px; font-weight: 500; border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-secondary); cursor: pointer; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
+  .copy-btn:hover { background: var(--color-background-secondary); }
+  .copy-btn.copied { background: #E1F5EE; color: #0F6E56; border-color: #5DCAA5; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .pill { border: 0.5px solid var(--color-border-secondary); border-radius: 20px; padding: 4px 12px; font-size: 12px; cursor: pointer; color: var(--color-text-secondary); background: var(--color-background-primary); transition: all 0.12s; }
+  .pill.active { background: #EEEDFE; color: #534AB7; border-color: #AFA9EC; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 12px 0; }
+  .notice { font-size: 12px; color: var(--color-text-secondary); margin-top: 6px; }
+</style>
+
+<div class="pg-wrap">
+  <h2 class="sr-only" style="position:absolute;left:-9999px">Lesson Prompt Generator for BMGT 1327 Principles of Management</h2>
+
+  <div class="pg-header">
+    <h1><i class="ti ti-school" aria-hidden="true"></i> Lesson Prompt Generator</h1>
+    <p>BMGT 1327 — Principles of Management · Dr. Staci Taylor · McLennan Community College</p>
+    <span class="pg-badge">Bloom's Taxonomy · ADA Compliant · AI-Resistant Design</span>
+  </div>
+
+  <!-- Course Format -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-calendar" aria-hidden="true"></i> Course format</div>
+    <div class="row2">
+      <div>
+        <label>Course duration</label>
+        <select id="duration">
+          <option value="16-week">16-week semester (Fall 2025)</option>
+          <option value="8-week">8-week accelerated</option>
+        </select>
+      </div>
+      <div>
+        <label>Delivery mode</label>
+        <select id="delivery">
+          <option value="online">Online (Brightspace/Connect)</option>
+          <option value="hybrid">Hybrid / Hyflex</option>
+          <option value="f2f">Face-to-face</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lesson Basics -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-file-description" aria-hidden="true"></i> Lesson basics</div>
+    <label>Lesson title</label>
+    <input type="text" id="title" placeholder="e.g., The Four Functions of Management">
+    <label>Chapter / unit</label>
+    <input type="text" id="chapter" placeholder="e.g., Chapter 1 — Unit 1">
+    <label>Topics covered <span class="notice">(comma-separated)</span></label>
+    <input type="text" id="topics" placeholder="e.g., Planning, Organizing, Leading, Controlling">
+  </div>
+
+  <!-- Bloom's Taxonomy -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-pyramid" aria-hidden="true"></i> Bloom's taxonomy level(s)</div>
+    <div class="bloom-grid" id="bloomGrid">
+      <div class="bloom-btn bloom-1" data-level="Remember" onclick="toggleBloom(this)"><span class="bloom-icon">🧠</span>Remember<br><span class="bloom-num">L1</span></div>
+      <div class="bloom-btn bloom-2" data-level="Understand" onclick="toggleBloom(this)"><span class="bloom-icon">💡</span>Understand<br><span class="bloom-num">L2</span></div>
+      <div class="bloom-btn bloom-3" data-level="Apply" onclick="toggleBloom(this)"><span class="bloom-icon">⚙️</span>Apply<br><span class="bloom-num">L3</span></div>
+      <div class="bloom-btn bloom-4" data-level="Analyze" onclick="toggleBloom(this)"><span class="bloom-icon">🔍</span>Analyze<br><span class="bloom-num">L4</span></div>
+      <div class="bloom-btn bloom-5" data-level="Evaluate" onclick="toggleBloom(this)"><span class="bloom-icon">⚖️</span>Evaluate<br><span class="bloom-num">L5</span></div>
+      <div class="bloom-btn bloom-6" data-level="Create" onclick="toggleBloom(this)"><span class="bloom-icon">🎨</span>Create<br><span class="bloom-num">L6</span></div>
+    </div>
+  </div>
+
+  <!-- Learning Objectives -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-target" aria-hidden="true"></i> Learning objectives</div>
+    <label>Write 2–4 measurable objectives <span class="notice">(one per line)</span></label>
+    <textarea id="objectives" placeholder="e.g., Students will be able to define the four management functions&#10;Students will compare classical vs. modern management theories&#10;Students will evaluate a local Waco business using SWOT analysis"></textarea>
+  </div>
+
+  <!-- Key Terms -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-vocabulary" aria-hidden="true"></i> Key terms</div>
+    <div class="tag-input-wrap">
+      <input type="text" id="termInput" placeholder="Type a term and press Add" onkeydown="if(event.key==='Enter'){addTerm()}">
+      <button class="tag-add-btn" onclick="addTerm()"><i class="ti ti-plus" aria-hidden="true"></i> Add</button>
+    </div>
+    <div class="tags" id="termTags"></div>
+    <p class="notice" style="margin-top:8px">Suggested for Ch. 1–3: <span style="color:var(--color-text-info);cursor:pointer" onclick="addSuggestedTerms()">Click to add common terms ↗</span></p>
+  </div>
+
+  <!-- Audience -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-users" aria-hidden="true"></i> Audience</div>
+    <label>Student background</label>
+    <select id="audience">
+      <option value="community college students, mix of traditional and non-traditional ages, many working adults, some with prior work experience in management roles">General MCC students (mixed backgrounds)</option>
+      <option value="first-generation college students with limited prior business coursework">First-generation / limited business background</option>
+      <option value="working adults and career changers seeking management credentials">Working adults / career changers</option>
+      <option value="business degree-seeking students">Business majors (degree-seeking)</option>
+    </select>
+    <label>Waco / local community context</label>
+    <input type="text" id="community" placeholder="e.g., H-E-B, ALDI, Baylor Scott & White, local nonprofits, Magnolia Market">
+  </div>
+
+  <!-- Activity Types -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-activity" aria-hidden="true"></i> Activity types</div>
+    <div class="checks" id="activityChecks">
+      <label class="check-item"><input type="checkbox" value="interactive discussion board with scenario-based prompts"> Discussion board</label>
+      <label class="check-item"><input type="checkbox" value="local business case study"> Local case study</label>
+      <label class="check-item"><input type="checkbox" value="McGraw-Hill Connect SmartBook activity"> Connect SmartBook</label>
+      <label class="check-item"><input type="checkbox" value="self-assessment (SA) activity"> Self-assessment (SA)</label>
+      <label class="check-item"><input type="checkbox" value="activity-based application (ABA) exercise"> Activity-based (ABA)</label>
+      <label class="check-item"><input type="checkbox" value="chapter quiz (20–30 multiple choice, 30 min, 3 attempts)"> Chapter quiz</label>
+      <label class="check-item"><input type="checkbox" value="management interview reflection"> Manager interview</label>
+      <label class="check-item"><input type="checkbox" value="unit exam (60 min, 1 attempt)"> Unit exam</label>
+      <label class="check-item"><input type="checkbox" value="role-play or simulation"> Role-play / sim</label>
+      <label class="check-item"><input type="checkbox" value="group collaborative project"> Group project</label>
+      <label class="check-item"><input type="checkbox" value="video analysis with reflection prompts"> Video + reflection</label>
+      <label class="check-item"><input type="checkbox" value="written case analysis submitted in Brightspace"> Written case analysis</label>
+    </div>
+  </div>
+
+  <!-- ADA & Accessibility -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-accessible" aria-hidden="true"></i> ADA / accessibility needs</div>
+    <div class="pill-row" id="adaPills">
+      <span class="pill" onclick="togglePill(this)" data-val="closed captions on all videos">Closed captions</span>
+      <span class="pill" onclick="togglePill(this)" data-val="alt text on all images and diagrams">Alt text for images</span>
+      <span class="pill" onclick="togglePill(this)" data-val="screen reader compatible materials">Screen reader ready</span>
+      <span class="pill" onclick="togglePill(this)" data-val="extended time accommodations note in quiz design">Extended time note</span>
+      <span class="pill" onclick="togglePill(this)" data-val="plain-language instructions for ESL learners">ESL-friendly language</span>
+      <span class="pill" onclick="togglePill(this)" data-val="WCAG 2.1 AA color contrast compliance">WCAG 2.1 AA contrast</span>
+      <span class="pill" onclick="togglePill(this)" data-val="mobile-friendly layout for Brightspace">Mobile-friendly</span>
+      <span class="pill" onclick="togglePill(this)" data-val="multiple means of representation (text, audio, visual)">UDL multi-means</span>
+    </div>
+  </div>
+
+  <!-- Analogies & Real-World -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-world" aria-hidden="true"></i> Analogies & real-world examples</div>
+    <label>Analogy style preference</label>
+    <select id="analogyStyle">
+      <option value="everyday workplace analogies familiar to community college working adults">Everyday workplace (working adults)</option>
+      <option value="sports team analogies">Sports team</option>
+      <option value="restaurant or food service analogies">Restaurant / food service</option>
+      <option value="military or emergency services analogies">Military / emergency services</option>
+      <option value="local Waco business examples">Local Waco businesses</option>
+    </select>
+    <label>Real-world context notes</label>
+    <input type="text" id="realWorld" placeholder="e.g., Connect to H-E-B supply chain, nonprofit management at Mission Waco">
+  </div>
+
+  <!-- Anti-AI Cheating -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-shield-lock" aria-hidden="true"></i> Mitigate AI/plagiarism misuse</div>
+    <div class="pill-row" id="antiAiPills">
+      <span class="pill" onclick="togglePill(this)" data-val="require students to cite personal work experiences or observations">Personal experience citation</span>
+      <span class="pill" onclick="togglePill(this)" data-val="include local Waco/Central Texas-specific details that AI cannot easily fabricate">Local specifics</span>
+      <span class="pill" onclick="togglePill(this)" data-val="ask students to reference a specific classmate post or interview by name">Reference classmate/interview</span>
+      <span class="pill" onclick="togglePill(this)" data-val="require voice or video submission components">Voice/video component</span>
+      <span class="pill" onclick="togglePill(this)" data-val="embed current-event or current-week specific prompts that shift weekly">Shifting weekly prompts</span>
+      <span class="pill" onclick="togglePill(this)" data-val="require process journal entries showing drafts and revisions">Process journal drafts</span>
+      <span class="pill" onclick="togglePill(this)" data-val="tie responses to the textbook (Kinicki, 10th ed.) with specific page or figure references">Textbook page citations</span>
+      <span class="pill" onclick="togglePill(this)" data-val="include a 'I pledge this is my original work' statement with specifics on the AI policy">Academic integrity pledge</span>
+    </div>
+  </div>
+
+  <!-- Additional Notes -->
+  <div class="section">
+    <div class="section-title"><i class="ti ti-notes" aria-hidden="true"></i> Additional instructor notes</div>
+    <textarea id="extraNotes" placeholder="Any additional context, special instructions, or assignment-specific details..."></textarea>
+  </div>
+
+  <button class="gen-btn" onclick="generatePrompt()"><i class="ti ti-wand" aria-hidden="true"></i> Generate AI prompt</button>
+
+  <div id="outputSection" style="display:none">
+    <div class="section">
+      <div class="section-title"><i class="ti ti-sparkles" aria-hidden="true"></i> Your generated prompt</div>
+      <div class="output-box" id="outputBox"></div>
+      <button class="copy-btn" id="copyBtn" onclick="copyPrompt()"><i class="ti ti-copy" aria-hidden="true"></i> Copy to clipboard</button>
+      <p class="notice" style="text-align:center">Paste this prompt into ChatGPT, Claude, Gemini, or any AI platform to generate your lesson materials.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  let bloomLevels = [];
+  let terms = [];
+
+  function toggleBloom(el) {
+    el.classList.toggle('active');
+    const lvl = el.dataset.level;
+    if (el.classList.contains('active')) {
+      if (!bloomLevels.includes(lvl)) bloomLevels.push(lvl);
+    } else {
+      bloomLevels = bloomLevels.filter(l => l !== lvl);
+    }
+  }
+
+  function togglePill(el) {
+    el.classList.toggle('active');
+  }
+
+  function addTerm() {
+    const input = document.getElementById('termInput');
+    const val = input.value.trim();
+    if (!val) return;
+    if (terms.includes(val)) { input.value = ''; return; }
+    terms.push(val);
+    renderTags();
+    input.value = '';
+  }
+
+  function removeTerm(t) {
+    terms = terms.filter(x => x !== t);
+    renderTags();
+  }
+
+  function renderTags() {
+    const container = document.getElementById('termTags');
+    container.innerHTML = terms.map(t =>
+      `<span class="tag">${t}<button onclick="removeTerm('${t.replace(/'/g,"\\'")}')">×</button></span>`
+    ).join('');
+  }
+
+  function addSuggestedTerms() {
+    const suggested = ['Planning', 'Organizing', 'Leading', 'Controlling', 'Management', 'SWOT', 'Stakeholder', 'Mission statement', 'Organizational culture', 'Ethics'];
+    suggested.forEach(t => { if (!terms.includes(t)) terms.push(t); });
+    renderTags();
+  }
+
+  function getChecked(containerId) {
+    return Array.from(document.querySelectorAll(`#${containerId} input[type=checkbox]:checked`)).map(el => el.value);
+  }
+
+  function getActivePills(containerId) {
+    return Array.from(document.querySelectorAll(`#${containerId} .pill.active`)).map(el => el.dataset.val);
+  }
+
+  function generatePrompt() {
+    const title = document.getElementById('title').value.trim() || '[Lesson Title]';
+    const chapter = document.getElementById('chapter').value.trim() || '[Chapter/Unit]';
+    const topics = document.getElementById('topics').value.trim() || '[Topics]';
+    const objectives = document.getElementById('objectives').value.trim() || '[Learning objectives]';
+    const duration = document.getElementById('duration').value;
+    const delivery = document.getElementById('delivery').value;
+    const audience = document.getElementById('audience').value;
+    const community = document.getElementById('community').value.trim() || 'local Waco, Texas businesses and organizations';
+    const analogyStyle = document.getElementById('analogyStyle').value;
+    const realWorld = document.getElementById('realWorld').value.trim();
+    const extraNotes = document.getElementById('extraNotes').value.trim();
+
+    const activities = getChecked('activityChecks');
+    const adaFeatures = getActivePills('adaPills');
+    const antiAi = getActivePills('antiAiPills');
+
+    const bloomText = bloomLevels.length > 0
+      ? bloomLevels.join(', ')
+      : 'Remember, Understand, Apply (default — please adjust)';
+
+    const termsText = terms.length > 0 ? terms.join(', ') : '[No terms specified]';
+
+    const activitiesText = activities.length > 0
+      ? activities.map(a => `  • ${a}`).join('\n')
+      : '  • [No activity types selected]';
+
+    const adaText = adaFeatures.length > 0
+      ? adaFeatures.map(a => `  • ${a}`).join('\n')
+      : '  • [No ADA features selected]';
+
+    const antiAiText = antiAi.length > 0
+      ? antiAi.map(a => `  • ${a}`).join('\n')
+      : '  • [No anti-AI features selected]';
+
+    const isAccelerated = duration === '8-week';
+    const durationNote = isAccelerated
+      ? 'This is an 8-WEEK ACCELERATED course. Pace activities to cover content in compressed time. Two chapters may need to be combined in a single week. Prioritize the most essential learning outcomes per Bloom\'s taxonomy and minimize redundant review activities.'
+      : 'This is a standard 16-WEEK SEMESTER course at McLennan Community College, Fall 2025. Follow the weekly schedule in the course syllabus.';
+
+    const prompt = `You are an expert instructional designer and community college professor helping create a lesson plan for BMGT 1327 — Principles of Management at McLennan Community College in Waco, Texas. The instructor is Dr. Staci Taylor. The textbook is "Management" by Kinicki, 10th edition (McGraw-Hill). The course runs on Brightspace LMS with McGraw-Hill Connect integration.
+
+=== COURSE CONTEXT ===
+Duration: ${duration === '16-week' ? '16-week semester (Fall 2025)' : '8-week accelerated'}
+Delivery: ${delivery}
+${durationNote}
+
+=== LESSON OVERVIEW ===
+Lesson Title: ${title}
+Chapter / Unit: ${chapter}
+Topics Covered: ${topics}
+
+=== AUDIENCE ===
+Students: ${audience}
+Local community context: ${community}${realWorld ? '\nReal-world context notes: ' + realWorld : ''}
+
+=== BLOOM\'S TAXONOMY LEVELS ===
+Target cognitive levels for this lesson: ${bloomText}
+
+Use Bloom's taxonomy throughout the lesson. Design learning objectives, activities, and assessments that scaffold from lower-order (Remember, Understand) to higher-order (Apply, Analyze, Evaluate, Create) thinking. Use action verbs aligned to the selected level(s).
+
+=== LEARNING OBJECTIVES ===
+${objectives}
+
+Each objective should map to a Bloom's level and use a measurable action verb (define, compare, analyze, design, etc.).
+
+=== KEY TERMS ===
+${termsText}
+
+=== ACTIVITIES TO INCLUDE ===
+${activitiesText}
+
+For each activity:
+  1. Write clear student-facing instructions
+  2. State the Bloom's level it targets
+  3. Specify where it lives (Brightspace discussion, Connect SmartBook, written submission, etc.)
+  4. Tie at least one activity to a local Waco/Central Texas community example (${community})
+  5. Suggest a rubric or scoring guidance
+  6. Note approximate time required
+
+=== ADA / ACCESSIBILITY REQUIREMENTS ===
+All materials must comply with MCC's accessibility standards and Section 508. Include the following:
+${adaText}
+
+Design all content so students using assistive technology can fully participate. Avoid PDFs without alt text. All media must have transcripts or captions.
+
+=== ANALOGIES & REAL-WORLD EXAMPLES ===
+Use ${analogyStyle} to explain abstract concepts.
+Ground examples in Central Texas / Waco context whenever possible.${realWorld ? '\nSpecific context: ' + realWorld : ''}
+
+=== MITIGATING AI/PLAGIARISM MISUSE ===
+The course AI policy (per syllabus): AI may be used for ideas and assistance, but NOT to do the work for the student. A first offense results in a written warning and a maximum of 50% on the resubmission. A second offense results in an automatic F.
+
+Design activities and assessments to mitigate AI misuse using these strategies:
+${antiAiText}
+
+All written assignments should require personal reflection, specific local detail, or reference to the Management Interview project so that generic AI output is immediately obvious.
+
+=== OUTPUT FORMAT ===
+Please produce the following lesson materials:
+
+1. LESSON OVERVIEW CARD — Title, Bloom's level(s), objectives, duration estimate, platform notes
+2. INSTRUCTOR INTRODUCTION — A brief (150-word) engaging lesson intro to post in Brightspace, written in a warm, direct voice for community college students
+3. CONTENT OUTLINE — Organized section-by-section breakdown of the lesson with key concepts, examples, and analogies
+4. KEY TERMS GLOSSARY — Clear definitions for all key terms with one real-world example each
+5. ACTIVITY DESIGNS — Fully designed activities per the types selected above, with instructions, Bloom's alignment, rubric, and anti-AI safeguards
+6. ASSESSMENT ITEMS — 10 multiple-choice questions aligned to Bloom's levels (label each question's level), plus 2 short-answer/essay prompts that are difficult to complete with generic AI output
+7. BRIGHTSPACE SETUP NOTES — Brief checklist for how to configure this lesson in Brightspace/Connect
+8. ACCESSIBILITY CHECKLIST — A quick checklist for the instructor to verify ADA compliance before publishing${extraNotes ? '\n\n=== ADDITIONAL INSTRUCTOR NOTES ===\n' + extraNotes : ''}
+
+Write in an engaging, culturally responsive tone appropriate for a diverse community college audience in Waco, Texas. Be specific—avoid generic corporate examples when a local Texas example is available.`;
+
+    document.getElementById('outputBox').textContent = prompt;
+    document.getElementById('outputSection').style.display = 'block';
+    document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('copyBtn').classList.remove('copied');
+    document.getElementById('copyBtn').innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy to clipboard';
+  }
+
+  function copyPrompt() {
+    const text = document.getElementById('outputBox').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.classList.add('copied');
+      btn.innerHTML = '<i class="ti ti-check" aria-hidden="true"></i> Copied!';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy to clipboard';
+      }, 2500);
+    });
+  }
+</script>
